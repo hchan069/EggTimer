@@ -20,8 +20,8 @@ public class MainActivity extends AppCompatActivity {
 
         String secondString = Integer.toString(seconds);
 
-        if (secondString == "0")
-            secondString = "00";
+        if (seconds <= 9)
+            secondString = "0" + secondString;
 
         timerTextView.setText(Integer.toString(minutes) + ":" + secondString);
     }
@@ -31,11 +31,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTick(long milliUntilFinished) {
-                updateTime((int) milliUntilFinished);
+                updateTime((int) milliUntilFinished / 1000);
             }
 
             @Override
             public void onFinish() {
+                timerTextView.setText("0:00");
                 Log.i("finished", "timer done");
             }
         }.start();
