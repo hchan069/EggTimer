@@ -1,5 +1,6 @@
 package com.spaga.eggtimer;
 
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void controlTimer(View view) {
-        new CountDownTimer(timerSeekBar.getProgress() * 1000, 1000) {
+        new CountDownTimer(timerSeekBar.getProgress() * 1000 + 100, 1000) {
 
             @Override
             public void onTick(long milliUntilFinished) {
@@ -37,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 timerTextView.setText("0:00");
-                Log.i("finished", "timer done");
+                MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.airhorn);
+                mediaPlayer.start();
             }
         }.start();
     }
