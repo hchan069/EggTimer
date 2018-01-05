@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     TextView timerTextView;
     Button controllerButton;
     boolean counterIsActive = false;
+    CountDownTimer countDownTimer;
 
     public void updateTime(int secondsLeft) {
         int minutes = (int) (secondsLeft / 60);
@@ -36,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
             timerSeekBar.setEnabled(false);
             controllerButton.setText("Stop");
 
-            new CountDownTimer(timerSeekBar.getProgress() * 1000 + 100, 1000) {
+            countDownTimer = new CountDownTimer(timerSeekBar.getProgress() * 1000 + 100,
+                    1000) {
 
                 @Override
                 public void onTick(long milliUntilFinished) {
@@ -50,6 +52,12 @@ public class MainActivity extends AppCompatActivity {
                     mediaPlayer.start();
                 }
             }.start();
+        }
+        else {
+            timerTextView.setText("0:30");
+            timerSeekBar.setProgress(30);
+            countDownTimer.cancel();
+            controllerButton.setText("Go");
         }
     }
 
