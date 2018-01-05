@@ -14,6 +14,8 @@ public class MainActivity extends AppCompatActivity {
 
     SeekBar timerSeekBar;
     TextView timerTextView;
+    Button controllerButton;
+    boolean counterIsActive = false;
 
     public void updateTime(int secondsLeft) {
         int minutes = (int) (secondsLeft / 60);
@@ -28,20 +30,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void controlTimer(View view) {
-        new CountDownTimer(timerSeekBar.getProgress() * 1000 + 100, 1000) {
 
-            @Override
-            public void onTick(long milliUntilFinished) {
-                updateTime((int) milliUntilFinished / 1000);
-            }
+        if (!counterIsActive) {
+            counterIsActive = true;
+            timerSeekBar.setEnabled(false);
+            controllerButton.setText("Stop");
 
-            @Override
-            public void onFinish() {
-                timerTextView.setText("0:00");
-                MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.airhorn);
-                mediaPlayer.start();
-            }
-        }.start();
+            new CountDownTimer(timerSeekBar.getProgress() * 1000 + 100, 1000) {
+
+                @Override
+                public void onTick(long milliUntilFinished) {
+                    updateTime((int) milliUntilFinished / 1000);
+                }
+
+                @Override
+                public void onFinish() {
+                    timerTextView.setText("0:00");
+                    MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.airhorn);
+                    mediaPlayer.start();
+                }
+            }.start();
+        }
     }
 
     @Override
@@ -51,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
         timerSeekBar = findViewById(R.id.timerSeekBar);
         timerTextView = findViewById(R.id.timerTextView);
+        controllerButton = findViewById(R.id.controllerButton);
 
         timerSeekBar.setMax(600);
         timerSeekBar.setProgress(300);
