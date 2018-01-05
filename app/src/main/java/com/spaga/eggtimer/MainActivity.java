@@ -58,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
             timerSeekBar.setProgress(30);
             countDownTimer.cancel();
             controllerButton.setText("Go");
+            timerSeekBar.setEnabled(true);
+            counterIsActive = false;
         }
     }
 
@@ -71,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         controllerButton = findViewById(R.id.controllerButton);
 
         timerSeekBar.setMax(600);
-        timerSeekBar.setProgress(300);
+        timerSeekBar.setProgress(30);
         timerSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
